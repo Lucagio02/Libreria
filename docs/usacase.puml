@@ -1,0 +1,21 @@
+@startuml
+actor Utente
+
+usecase "Aggiungi libro" as UC1
+usecase "Modifica libro" as UC2
+usecase "Elimina libro" as UC3
+usecase "Cerca libro" as UC4
+usecase "Filtra per genere/stato" as UC5
+usecase "Ordina libri" as UC6
+usecase "Visualizza libreria" as UC7
+usecase "Salva/Carica dati" as UC8
+
+Utente --> UC1
+Utente --> UC2
+Utente --> UC3
+Utente --> UC4
+Utente --> UC5
+Utente --> UC6
+Utente --> UC7
+Utente --> UC8
+@enduml

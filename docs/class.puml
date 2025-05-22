@@ -1,0 +1,40 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+@startuml
+class Libro {
+  - String titolo
+  - String autore
+  - String isbn
+  - String genere
+  - int valutazione
+  - String statoLettura
+}
+
+class Libreria {
+  - List<Libro> libri
+  + aggiungiLibro(Libro)
+  + rimuoviLibro(String isbn)
+  + modificaLibro(String isbn, Libro)
+  + cercaLibro(String titolo)
+  + filtraPerGenere(String)
+  + ordinaPerTitolo()
+}
+
+class GestoreFile {
+  + salvaSuFile(List<Libro>)
+  + caricaDaFile() : List<Libro>
+}
+
+class MainApp {
+  + main(String[])
+}
+
+MainApp --> Libreria
+Libreria --> Libro
+MainApp --> GestoreFile
+GestoreFile --> Libro
+@enduml
+
+
+@enduml
