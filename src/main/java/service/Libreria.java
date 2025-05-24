@@ -1,5 +1,6 @@
-package model;
+package service;
 
+import model.Libro;
 import model.strategy.OrdinamentoPerTitolo;
 import model.strategy.OrdinamentoStrategy;
 

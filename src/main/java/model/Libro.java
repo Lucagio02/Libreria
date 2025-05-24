@@ -1,50 +1,87 @@
 package model;
-
+import utility.isbnvalidator;
 public class Libro {
-    private String titolo;
-    private String autore;
-    private String isbn;
-    private String genere;
-    private int valutazione;
-    private String statoLettura;
+    private final String titolo;
+    private final String isbn;
+    private final String autore;
+    private Genere genere;
+    private final int valutazione;
+    private StatoLettura statoLettura;
+    private final int annoPubblicazione;
 
-    public Libro(String titolo, String autore, String isbn, String genere, int valutazione, String statoLettura) {
-        this.titolo = titolo;
-        this.autore = autore;
-        this.isbn = isbn;
-        this.genere = genere;
-        this.valutazione = valutazione;
-        this.statoLettura = statoLettura;
+    private Libro(Builder builder) {
+        this.titolo = builder.titolo;
+        this.isbn = builder.isbn;
+        this.autore = builder.autore;
+        this.genere = builder.genere;
+        this.valutazione = builder.valutazione;
+        this.statoLettura = builder.statoLettura;
+        this.annoPubblicazione = builder.annoPubblicazione;
     }
 
-    // GETTER e SETTER
+    public static class Builder {
+        private final String titolo;
+        private final String isbn;
+        private final String autore;
+
+        private Genere genere;
+        private int valutazione = 0;
+        private StatoLettura statoLettura;
+        private int annoPubblicazione = -1;  // -1 = non specificato
+
+        public Builder(String titolo, String isbn, String autore) {
+            this.titolo = titolo;
+            if(!isbnvalidator.isbnvalidator(isbn)){
+                throw new IllegalArgumentException("ISBN non è valido, si prega di reinserlo");
+            }
+            this.isbn = isbn;
+            this.autore = autore;
+        }
+
+        public Builder genere(Genere genere) {
+            this.genere = genere;
+            return this;
+        }
+
+        public Builder valutazione(int valutazione) {
+            this.valutazione = valutazione;
+            if (valutazione > 0 && valutazione <=5) {//obbligatoriamente da 0 a 5 in cui 0 è quando non è ancora letto
+                return this;
+            }
+            throw new IllegalArgumentException("Valutazione non valida");
+        }
+
+        public Builder statoLettura(StatoLettura stato) {
+            this.statoLettura = stato;
+            if (stato != StatoLettura.LETTO) {//in modo tale che se il libro non sia stato letto non si possà fare una valutazione
+                this.valutazione = 0;
+            }
+            return this;
+        }
+
+        public Builder annoPubblicazione(int anno) {
+            this.annoPubblicazione = anno;
+            return this;
+        }
+
+        public Libro build() {
+            return new Libro(this);
+        }
+    }
+
+    // Getter
     public String getTitolo() { return titolo; }
-    public void setTitolo(String titolo) { this.titolo = titolo; }
-
-    public String getAutore() { return autore; }
-    public void setAutore(String autore) { this.autore = autore; }
-
     public String getIsbn() { return isbn; }
-    public void setIsbn(String isbn) { this.isbn = isbn; }
-
-    public String getGenere() { return genere; }
-    public void setGenere(String genere) { this.genere = genere; }
-
+    public String getAutore() { return autore; }
+    public Genere getGenere() { return genere; }
     public int getValutazione() { return valutazione; }
-    public void setValutazione(int valutazione) { this.valutazione = valutazione; }
-
-    public String getStatoLettura() { return statoLettura; }
-    public void setStatoLettura(String statoLettura) { this.statoLettura = statoLettura; }
+    public StatoLettura getStatoLettura() { return statoLettura; }
+    public int getAnnoPubblicazione() { return annoPubblicazione; }
 
     @Override
     public String toString() {
-        return "Libro{" +
-                "titolo='" + titolo + '\'' +
-                ", autore='" + autore + '\'' +
-                ", isbn='" + isbn + '\'' +
-                ", genere='" + genere + '\'' +
-                ", valutazione=" + valutazione +
-                ", statoLettura='" + statoLettura + '\'' +
-                '}';
+        return titolo + " di " + autore +
+                " (" + genere.toString() + ", " + (annoPubblicazione > 0 ? annoPubblicazione : "Anno n/d") + ") - Stato: " +
+                statoLettura + ", Valutazione: " + valutazione + "★";
     }
 }
