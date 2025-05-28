@@ -22,6 +22,13 @@ public class Libreria {
         this.libri = new ArrayList<>();
         this.strategyOrdinamento= new OrdinamentoPerTitolo();
     }
+    private static Libreria instance;
+    public static synchronized Libreria getInstance() {
+        if (instance == null) {
+            instance = new Libreria();
+        }
+        return instance;
+    }
 
     public void aggiungiLibro(Libro libro) {
         libri.add(libro);

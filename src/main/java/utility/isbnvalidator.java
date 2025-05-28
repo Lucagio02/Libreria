@@ -1,6 +1,6 @@
 package utility;
 public class isbnvalidator{
-public static boolean isbnvalidator(String isbn) {
+public static boolean isvalid(String isbn) {
     if (isbn == null || isbn.length() != 13 || !isbn.matches("\\d+")) return false;
 
     int sum = 0;

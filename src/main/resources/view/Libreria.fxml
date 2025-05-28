@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="view.controller.LibreriaController">
+    <top>
+        <Label text="Libreria personale" style="-fx-font-size: 18px;" />
+    </top>
+    <VBox spacing="10" alignment="CENTER" padding="10">
+        <HBox spacing="10">
+            <TextField fx:id="inputTitolo" promptText="Titolo"/>
+            <TextField fx:id="inputIsbn" promptText="ISBN"/>
+            <TextField fx:id="inputAutore" promptText="Autore"/>
+            <Button text="Aggiungi Libro" onAction="#handleAggiungiLibro"/>
+
+        </HBox>
+        <!-- TableView va sotto -->
+    </VBox>
+
+    <center>
+        <TableView fx:id="tableLibri">
+            <columns>
+                <TableColumn text="Titolo" fx:id="colTitolo"/>
+                <TableColumn text="ISBN" fx:id="colIsbn"/>
+                <TableColumn text="Autore" fx:id="colAutore"/>
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <Button text="Aggiungi libro" onAction="#handleAggiungiLibro"/>
+    </bottom>
+</BorderPane>

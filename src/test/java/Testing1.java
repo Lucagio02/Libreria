@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.Libreria;
 import model.strategy.OrdinamentoPerTitolo;
-
+import utility.isbnvalidator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +22,7 @@ public class Testing1 {
 
     @Test
     void testAggiuntaLibro() {
-        Libro libro = new Libro.Builder("Titolo", "123456", "Autore").build();
+        Libro libro = new Libro.Builder("Titolo", "9783161484100", "Autore").build();
         libreria.aggiungiLibro(libro);
 
         assertTrue(libreria.ordinaLibri().contains(libro), "Il libro dovrebbe essere stato aggiunto");
@@ -30,19 +30,21 @@ public class Testing1 {
 
     @Test
     void testRimozioneLibro() {
-        Libro libro = new Libro.Builder("Titolo", "123456", "Autore").build();
+        Libro libro = new Libro.Builder("Titolo", "9780131103627", "Autore").build();
         libreria.aggiungiLibro(libro);
-        boolean rimosso = libreria.rimuoviLibro("123456");
+        boolean rimosso = libreria.rimuoviLibro("9780131103627");
 
         assertTrue(rimosso, "Il libro dovrebbe essere stato rimosso");
         assertFalse(libreria.ordinaLibri().contains(libro), "Il libro non dovrebbe più essere nella libreria");
     }
     @Test
     void testOrdinamentoPerTitolo() {
-        Libreria libreria = new Libreria();
-        Libro libro1 = new Libro.Builder("Zorro", "Autore1", "123").build();
-        Libro libro2 = new Libro.Builder("Anna", "Autore2", "456").build();
-        Libro libro3 = new Libro.Builder("Libro", "Autore3", "789").build();
+            Libreria libreria = new Libreria();
+        String isbn1 = "9780140449136";  // l'ISBN valido
+        System.out.println("Controllo validità isbn1: "+ isbnvalidator.isvalid(isbn1) );
+            Libro libro1 = new Libro.Builder("Adoreta", isbn1, "George Orwell").build();
+            Libro libro2 = new Libro.Builder("Il Piccolo Principe", "9780306406157", "Antoine de Saint-Exupéry").build();
+            Libro libro3 = new Libro.Builder("Harry Potter e la pietra filosofale", "9783161484100", "J.K. Rowling").build();
             libreria.aggiungiLibro(libro1);
             libreria.aggiungiLibro(libro2);
             libreria.aggiungiLibro(libro3);
@@ -50,16 +52,17 @@ public class Testing1 {
             libreria.setStrategiaOrdinamento(new OrdinamentoPerTitolo());
             List<Libro> ordinati = libreria.ordinaLibri();
 
-            assertEquals("Anna", ordinati.get(0).getTitolo());
-            assertEquals("Libro", ordinati.get(1).getTitolo());
-            assertEquals("Zorro", ordinati.get(2).getTitolo());
+            assertEquals("Adoreta", ordinati.get(0).getTitolo());
+            assertEquals("Harry Potter e la pietra filosofale", ordinati.get(1).getTitolo());
+            assertEquals("Il Piccolo Principe", ordinati.get(2).getTitolo());
         }
-    private final String testFile = "test_libreria.json";
+
+        private final String testFile = "test_libreria.json";
 
     @Test
     void testSalvataggioCaricamento() {
         Libreria libreria = new Libreria();
-        Libro libro1 = new Libro.Builder("Il titolo", "Autore", "0001").build();
+        Libro libro1 = new Libro.Builder("Il titolo", "9781861972712", "0001").build();
         libreria.aggiungiLibro(libro1);
         libreria.salvaSuFile(testFile);
 

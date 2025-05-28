@@ -30,12 +30,16 @@ public class Libro {
         private int annoPubblicazione = -1;  // -1 = non specificato
 
         public Builder(String titolo, String isbn, String autore) {
-            this.titolo = titolo;
-            if(!isbnvalidator.isbnvalidator(isbn)){
+            if (titolo == null || titolo.isEmpty())
+                throw new IllegalArgumentException("Il titolo non può essere vuoto");
+            if (autore == null || autore.isEmpty())
+                throw new IllegalArgumentException("L'autore non può essere vuoto");
+            if(!isbnvalidator.isvalid(isbn)){
                 throw new IllegalArgumentException("ISBN non è valido, si prega di reinserlo");
             }
             this.isbn = isbn;
             this.autore = autore;
+            this.titolo = titolo;
         }
 
         public Builder genere(Genere genere) {
@@ -53,9 +57,6 @@ public class Libro {
 
         public Builder statoLettura(StatoLettura stato) {
             this.statoLettura = stato;
-            if (stato != StatoLettura.LETTO) {//in modo tale che se il libro non sia stato letto non si possà fare una valutazione
-                this.valutazione = 0;
-            }
             return this;
         }
 
@@ -65,6 +66,9 @@ public class Libro {
         }
 
         public Libro build() {
+            if(statoLettura != StatoLettura.LETTO){
+                this.valutazione = 0;
+            }
             return new Libro(this);
         }
     }
