@@ -2,7 +2,7 @@ package utility;
 
 import javafx.scene.control.Alert;
 
-public class Alert {
+public class Avviso {
     public static void mostraErrore(String header, String contenuto) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Errore");

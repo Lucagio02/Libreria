@@ -2,7 +2,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import service.Libreria;
 
-public class singletontest {
+public class singletonTest {
     @Test
     public void testSingletonUniqueness() {
         Libreria instance1 = Libreria.getInstance();

@@ -67,7 +67,7 @@ public class Testing1 {
         libreria.salvaSuFile(testFile);
 
         Libreria nuovaLibreria = new Libreria();
-        nuovaLibreria.caricaDaFile(testFile);
+        nuovaLibreria.caricaDaFile(testFile,true);
         List<Libro> caricati = nuovaLibreria.ordinaLibri();
 
         assertEquals(1, caricati.size());

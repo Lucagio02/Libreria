@@ -1,33 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="view.controller.LibreriaController">
-    <top>
-        <Label text="Libreria personale" style="-fx-font-size: 18px;" />
-    </top>
-    <VBox spacing="10" alignment="CENTER" padding="10">
-        <HBox spacing="10">
-            <TextField fx:id="inputTitolo" promptText="Titolo"/>
-            <TextField fx:id="inputIsbn" promptText="ISBN"/>
-            <TextField fx:id="inputAutore" promptText="Autore"/>
-            <Button text="Aggiungi Libro" onAction="#handleAggiungiLibro"/>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="view.controller.LibreriaController">
 
-        </HBox>
-        <!-- TableView va sotto -->
-    </VBox>
+    <top>
+        <VBox prefHeight="82.0" prefWidth="1106.0" spacing="10.0">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <Label style="-fx-font-size: 18px;" text="Libreria personale" />
+            <HBox spacing="10">
+                <TextField fx:id="inputTitolo" promptText="Titolo" />
+                <TextField fx:id="inputIsbn" promptText="ISBN" />
+                <TextField fx:id="inputAutore" promptText="Autore" />
+                <Button onAction="#handleAggiungiLibro" text="Aggiungi Libro" />
+                <Button text="Rimuovi Libro" onAction="#handleRimuoviLibro"/>
+            </HBox>
+        </VBox>
+    </top>
 
     <center>
         <TableView fx:id="tableLibri">
             <columns>
-                <TableColumn text="Titolo" fx:id="colTitolo"/>
-                <TableColumn text="ISBN" fx:id="colIsbn"/>
-                <TableColumn text="Autore" fx:id="colAutore"/>
+                <TableColumn fx:id="colTitolo" prefWidth="190.0" text="Titolo" />
+                <TableColumn fx:id="colIsbn" prefWidth="190.0" text="ISBN" />
+                <TableColumn fx:id="colAutore" prefWidth="190.0" text="Autore" />
+                <TableColumn fx:id="colGenere" prefWidth="150.0" text="Genere" />
+                <TableColumn fx:id="colValutazione" prefWidth="150.0" text="Valutazione" />
+                <TableColumn fx:id="colStato" prefWidth="150.0" text="Stato" />
+                <TableColumn fx:id="colAnno" prefWidth="150.0" text="Anno" />
+
             </columns>
         </TableView>
     </center>
+
     <bottom>
-        <Button text="Aggiungi libro" onAction="#handleAggiungiLibro"/>
+        <Button onAction="#handleAggiungiLibro" text="Aggiungi libro" />
+        <Button text="Rimuovi Libro" onAction="#handleRimuoviLibro"/>
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+            <Button onAction="#handleSalvataggio" text="Salva su file" />
+        </HBox>
     </bottom>
+
 </BorderPane>

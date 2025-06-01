@@ -8,7 +8,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.List;
 
-class Usalibriesempio {
+class Testlibriesempio {
 
     private Libreria libreria;
     private static final String FILE_VUOTO = "test/resources/libri_vuoto.json";

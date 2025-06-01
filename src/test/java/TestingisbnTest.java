@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import utility.isbnvalidator;
-public class testingisbn{
+public class TestingisbnTest {
 
     @Test
     public void testValidIsbn13() {

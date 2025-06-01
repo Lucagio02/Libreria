@@ -5,9 +5,9 @@ public class Libro {
     private final String isbn;
     private final String autore;
     private Genere genere;
-    private final int valutazione;
+    private  int valutazione;
     private StatoLettura statoLettura;
-    private final int annoPubblicazione;
+    private  int annoPubblicazione;
 
     private Libro(Builder builder) {
         this.titolo = builder.titolo;
@@ -71,6 +71,26 @@ public class Libro {
             }
             return new Libro(this);
         }
+    }
+
+
+    //setter
+    public void setGenere(Genere genere) {
+        this.genere = genere;
+    }
+
+    public void setStatoLettura(StatoLettura statoLettura) {
+        this.statoLettura = statoLettura;
+    }
+
+    public void setValutazione(int valutazione) {
+        if (valutazione < 0 || valutazione > 5)
+            throw new IllegalArgumentException("Valutazione deve essere tra 0 e 5");
+        this.valutazione = valutazione;
+    }
+
+    public void setAnnoPubblicazione(int annoPubblicazione) {
+        this.annoPubblicazione = annoPubblicazione;
     }
 
     // Getter

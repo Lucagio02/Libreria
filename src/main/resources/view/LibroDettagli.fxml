@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="view.controller.LibroDettagliController"
+      spacing="10" alignment="CENTER" style="-fx-padding: 20;">
+
+    <Label text="Modifica Dettagli del Libro" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <GridPane hgap="10" vgap="10">
+
+        <Label text="Titolo:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <Label fx:id="titoloLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Autore:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Label fx:id="autoreLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="ISBN:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <Label fx:id="isbnLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Genere:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="genereComboBox" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Valutazione:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <Spinner fx:id="valutazioneSpinner" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Stato di lettura:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="statoComboBox" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+        <Label text="Anno di pubblicazione:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <TextField fx:id="annoField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="10">
+        <Button fx:id="salvaButton" text="Salva" onAction="#handleSalva"/>
+        <Button text="Chiudi" onAction="#handleChiudi"/>
+    </HBox>
+
+</VBox>
