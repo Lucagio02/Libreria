@@ -84,10 +84,16 @@ public class Libro {
     }
 
     public void setValutazione(int valutazione) {
+        if (statoLettura != StatoLettura.LETTO) {
+            this.valutazione = 0;  // forza a zero se non è stato letto
+            return;
+        }
+
         if (valutazione < 0 || valutazione > 5)
             throw new IllegalArgumentException("Valutazione deve essere tra 0 e 5");
         this.valutazione = valutazione;
     }
+
 
     public void setAnnoPubblicazione(int annoPubblicazione) {
         this.annoPubblicazione = annoPubblicazione;

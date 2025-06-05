@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import model.Genere?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="view.controller.LibreriaController">
 
     <top>
@@ -16,6 +17,7 @@
                 <TextField fx:id="inputTitolo" promptText="Titolo" />
                 <TextField fx:id="inputIsbn" promptText="ISBN" />
                 <TextField fx:id="inputAutore" promptText="Autore" />
+
                 <Button onAction="#handleAggiungiLibro" text="Aggiungi Libro" />
                 <Button text="Rimuovi Libro" onAction="#handleRimuoviLibro"/>
             </HBox>
