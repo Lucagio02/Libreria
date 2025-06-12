@@ -1,12 +1,15 @@
 package view.controller;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Genere;
+import model.StatoLettura;
 import service.Libreria;
 import utility.validatore;
 import utility.Avviso;
@@ -31,11 +34,14 @@ public class LibreriaController {
 
     @FXML
     private void initialize() {
-        // Collegamento delle colonne agli attributi
+        inizializzaColonneTabella();
+        inizializzaFiltri();
+        inizializzaDoppioClick();
+    }
+    private void inizializzaColonneTabella() {
         colTitolo.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTitolo()));
         colAutore.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAutore()));
         colIsbn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getIsbn()));
-        tableLibri.setItems(FXCollections.observableArrayList(Libreria.getInstance().getLibri()));
         colGenere.setCellValueFactory(data -> new SimpleStringProperty(
                 data.getValue().getGenere() != null ? data.getValue().getGenere().toString() : ""
         ));
@@ -45,6 +51,19 @@ public class LibreriaController {
         ));
         colAnno.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getAnnoPubblicazione()).asObject());
 
+        tableLibri.setItems(FXCollections.observableArrayList(Libreria.getInstance().getLibri()));
+    }
+    private void inizializzaFiltri() {
+        filtroGenereBox.getItems().addAll(Genere.values());
+        filtroStatoBox.getItems().addAll(StatoLettura.values());
+
+        filtroTitoloField.textProperty().addListener((obs, oldV, newV) -> applicaFiltri());
+        filtroAutoreField.textProperty().addListener((obs, oldV, newV) -> applicaFiltri());
+        filtroIsbnField.textProperty().addListener((obs, oldV, newV) -> applicaFiltri());
+        filtroGenereBox.valueProperty().addListener((obs, oldV, newV) -> applicaFiltri());
+        filtroStatoBox.valueProperty().addListener((obs, oldV, newV) -> applicaFiltri());
+    }
+    private void inizializzaDoppioClick() {
         tableLibri.setRowFactory(tv -> {
             TableRow<Libro> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -64,6 +83,12 @@ public class LibreriaController {
 
     @FXML
     private TextField inputIsbn;
+    @FXML private TextField filtroTitoloField;
+    @FXML private TextField filtroAutoreField;
+    @FXML private TextField filtroIsbnField;
+    @FXML private ComboBox<Genere> filtroGenereBox;
+    @FXML private ComboBox<StatoLettura> filtroStatoBox;
+
     @FXML
     private void handleAggiungiLibro() {
         String titolo = inputTitolo.getText();
@@ -146,6 +171,40 @@ public class LibreriaController {
             alert.showAndWait();
         }
     }
+    @FXML
+    private void applicaFiltri() {
+        String titolo = filtroTitoloField.getText().toLowerCase();
+        String autore = filtroAutoreField.getText().toLowerCase();
+        String isbn = filtroIsbnField.getText().toLowerCase();
+        Genere genere = filtroGenereBox.getValue();
+        StatoLettura stato = filtroStatoBox.getValue();
+
+        ObservableList<Libro> filtrati = FXCollections.observableArrayList();
+        for (Libro libro : Libreria.getInstance().getLibri()) {
+            boolean matchTitolo = libro.getTitolo().toLowerCase().contains(titolo);
+            boolean matchAutore = libro.getAutore().toLowerCase().contains(autore);
+            boolean matchIsbn = libro.getIsbn().toLowerCase().contains(isbn);
+            boolean matchGenere = genere == null || libro.getGenere() == genere;
+            boolean matchStato = stato == null || libro.getStatoLettura() == stato;
+
+            if (matchTitolo && matchAutore && matchIsbn && matchGenere && matchStato) {
+                filtrati.add(libro);
+            }
+        }
+        tableLibri.setItems(filtrati);
+    }
+    @FXML
+    private void handleAzzeraFiltri() {
+        filtroTitoloField.clear();
+        filtroAutoreField.clear();
+        filtroIsbnField.clear();
+        filtroGenereBox.getSelectionModel().clearSelection();
+        filtroStatoBox.getSelectionModel().clearSelection();
+
+        tableLibri.setItems(FXCollections.observableArrayList(Libreria.getInstance().getLibri()));
+    }
+
+
 
 
 }

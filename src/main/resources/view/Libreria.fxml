@@ -21,6 +21,17 @@
                 <Button onAction="#handleAggiungiLibro" text="Aggiungi Libro" />
                 <Button text="Rimuovi Libro" onAction="#handleRimuoviLibro"/>
             </HBox>
+            <Region HBox.hgrow="ALWAYS" />
+
+            <!-- Parte filtri -->
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <TextField fx:id="filtroTitoloField" promptText="Filtra per Titolo"/>
+                <TextField fx:id="filtroAutoreField" promptText="Filtra per Autore"/>
+                <TextField fx:id="filtroIsbnField" promptText="Filtra per ISBN"/>
+                <ComboBox fx:id="filtroGenereBox" promptText="Genere"/>
+                <ComboBox fx:id="filtroStatoBox" promptText="Stato Lettura"/>
+                <Button text="Azzera Filtri" onAction="#handleAzzeraFiltri"/>
+            </HBox>
         </VBox>
     </top>
 
